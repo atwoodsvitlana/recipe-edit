@@ -1,84 +1,189 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Finder</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <body>
+  <title>The Recipe Edit — Discover Your Next Favorite</title>
 
-      <p class="eyebrow-label">Fresh Iinspriration</p>
-      <h1>The Recipe Edit</h1>
-      <p>Fresh inspiration for whatever you're craving.</p>
+  <meta
+    name="description"
+    content="Discover delicious recipes, explore global cuisines, and find fresh inspiration for your next meal."
+  >
 
-      
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="./style.css">
+
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="The Recipe Edit home">
+      <span class="brand-mark">R.</span>
+      <span class="brand-name">THE RECIPE EDIT</span>
+    </a>
+
+    <span class="header-note">A little inspiration, served daily.</span>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow-label">
+          <span class="eyebrow-line"></span>
+          YOUR NEXT FAVORITE MEAL STARTS HERE
+        </p>
+
+        <h1>
+          Good food.<br>
+          <span>Beautifully simple.</span>
+        </h1>
+
+        <p class="hero-description">
+          A collection of recipes worth coming back to.
+          Find something new, follow a craving, and make
+          something delicious.
+        </p>
+      </div>
+
+      <div class="hero-decoration" aria-hidden="true">
+        <span class="decoration-circle"></span>
+        <span class="decoration-letter">R</span>
+        <span class="decoration-caption">COOK SOMETHING GOOD</span>
+      </div>
+    </section>
+
+    <section class="discovery-section" aria-label="Find recipes">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow-label">THE COLLECTION</p>
+          <h2>Find your flavor.</h2>
+        </div>
+
+        <p class="section-note">
+          Something delicious is just a search away.
+        </p>
+      </div>
 
       <div class="search-bar">
+        <div class="search">
+          <ion-icon name="search" aria-hidden="true"></ion-icon>
 
-        <div class="search" >
-          <ion-icon name="search"></ion-icon>
           <input
-            type="text"
+            type="search"
             id="search"
-            placeholder="Search recipes..."
+            placeholder="Search recipes, ingredients..."
+            aria-label="Search recipes"
+            autocomplete="off"
           >
+
+          <span class="search-hint" aria-hidden="true">⌕</span>
         </div>
 
         <div class="sort">
-
           <div class="square">
-            <p>Category</p>
+            <label for="category">Category</label>
             <select id="category">
-              <option value="all">All Categories</option>
+              <option value="all">All categories</option>
             </select>
           </div>
 
           <div class="square">
-            <p>Cuisine</p>
+            <label for="cuisine">Cuisine</label>
             <select id="cuisine">
-              <option value="all">All Cuisines</option>
+              <option value="all">All cuisines</option>
             </select>
           </div>
 
           <div class="square">
-            <p>Sort By</p>
-            <select id="sort" >
-              <option value="">Sort by</option>
-              <option value="name-asc">Name A-Z</option>
-              <option value="name-desc">Name Z-A</option>
-              <option value="rating-desc">Rating Highest</option>
-              <option value="rating-asc">Rating Lowest</option>
+            <label for="sort">Sort by</label>
+            <select id="sort">
+              <option value="">Recommended</option>
+              <option value="name-asc">Name: A–Z</option>
+              <option value="name-desc">Name: Z–A</option>
+              <option value="rating-desc">Highest rated</option>
+              <option value="rating-asc">Lowest rated</option>
             </select>
           </div>
-          
         </div>
-
       </div>
 
-      <div id="status"></div>
-
-      <div id="recipes"></div>
-
-      <div class="page-btns">
-        <button id="prev"> < </button>
-        <span id="page"></span>
-        <button id="next"> > </button>
+      <div class="results-heading">
+        <p class="results-label">A FEW THINGS TO MAKE</p>
+        <span class="results-accent" aria-hidden="true">✳</span>
       </div>
 
+      <div id="status" class="status" role="status" aria-live="polite"></div>
 
-      <div id="modal" class="hidden">
-        <div id="modal-content"></div>
-      </div>
-    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
-    <script src="script.js" ></script>
-  </body>
+      <div id="recipes" class="recipes-grid"></div>
+
+      <nav class="pagination" aria-label="Recipe pages">
+        <button
+          id="prev"
+          class="page-arrow"
+          type="button"
+          aria-label="Previous page"
+        >
+          <span aria-hidden="true">←</span>
+          <span>Previous</span>
+        </button>
+
+        <span id="page" class="page-indicator" aria-live="polite"></span>
+
+        <button
+          id="next"
+          class="page-arrow"
+          type="button"
+          aria-label="Next page"
+        >
+          <span>Next</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </nav>
+    </section>
+
+    <section class="closing-note">
+      <span class="closing-star" aria-hidden="true">✳</span>
+      <p>Good things take a little seasoning.</p>
+      <span class="closing-subtitle">HAPPY COOKING, ALWAYS.</span>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <a class="footer-brand" href="#">THE RECIPE EDIT</a>
+    <p>Made for the love of good food.</p>
+    <span>© 2026 THE RECIPE EDIT</span>
+  </footer>
+
+  <div
+    id="modal"
+    class="modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Recipe details"
+  >
+    <div id="modal-content" class="modal-content"></div>
+  </div>
+
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"
+  ></script>
+
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"
+  ></script>
+</body>
 </html>

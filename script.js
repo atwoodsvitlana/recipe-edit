@@ -44,7 +44,9 @@ const fetchAllRecipes = async() => {
     }
 
   } catch(err) {
-    console.log(err);
+
+    console.error("Error fetching recipes:", err);
+    statusDiv.textContent = "Unable to fetch recipes. Please try again.";
 
     return {
       success: false,
@@ -58,10 +60,18 @@ const renderRecipes = (arr) => {
 
   const start = (currentPage - 1) * recipesPerPage;
   const end = start + recipesPerPage;
+  const paginatedRecipes = arr.slice(start, end);
 
   if(arr.length === 0) {
     recipesSection.innerHTML = "";
     statusDiv.textContent = "No recipes found";
+    updatePagination();
+    return;
+  }
+
+   if (paginatedRecipes.length === 0) {
+    currentPage = 1;
+    renderRecipes(arr);
     return;
   }
 
@@ -200,9 +210,14 @@ const handleSearch = () => {
 
 
 const loadFavorites = () => {
-  favorites = JSON.parse(
-    localStorage.getItem("favRecipes")
-  ) || [];
+  try {
+    favorites = JSON.parse(
+      localStorage.getItem("favRecipes")
+    ) || [];
+  } catch (err) {
+    console.error("Unable to load favorites:", err);
+    favorites = [];
+  }
 };
 
 const saveFavorites = () => {

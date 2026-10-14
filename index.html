@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+      <p class="eyebrow-label">Fresh Iinspriration</p>
+      <h1>The Recipe Edit</h1>
+      <p>Fresh inspiration for whatever you're craving.</p>
+
+      
+
+      <div class="search-bar">
+
+        <div class="search" >
+          <ion-icon name="search"></ion-icon>
+          <input
+            type="text"
+            id="search"
+            placeholder="Search recipes..."
+          >
+        </div>
+
+        <div class="sort">
+
+          <div class="square">
+            <p>Category</p>
+            <select id="category">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+
+          <div class="square">
+            <p>Cuisine</p>
+            <select id="cuisine">
+              <option value="all">All Cuisines</option>
+            </select>
+          </div>
+
+          <div class="square">
+            <p>Sort By</p>
+            <select id="sort" >
+              <option value="">Sort by</option>
+              <option value="name-asc">Name A-Z</option>
+              <option value="name-desc">Name Z-A</option>
+              <option value="rating-desc">Rating Highest</option>
+              <option value="rating-asc">Rating Lowest</option>
+            </select>
+          </div>
+          
+        </div>
+
+      </div>
+
+      <div id="status"></div>
+
+      <div id="recipes"></div>
+
+      <div class="page-btns">
+        <button id="prev"> < </button>
+        <span id="page"></span>
+        <button id="next"> > </button>
+      </div>
+
+
+      <div id="modal" class="hidden">
+        <div id="modal-content"></div>
+      </div>
+    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
+    <script src="script.js" ></script>
+  </body>
+</html>

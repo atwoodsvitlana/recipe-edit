@@ -56,98 +56,184 @@ const fetchAllRecipes = async() => {
 }
 
 
-const renderRecipes = (arr) => {
 
+const renderRecipes = (arr) => {
   const start = (currentPage - 1) * recipesPerPage;
   const end = start + recipesPerPage;
   const paginatedRecipes = arr.slice(start, end);
 
-  if(arr.length === 0) {
-    recipesSection.innerHTML = "";
+  recipesSection.replaceChildren();
+
+  if (arr.length === 0) {
     statusDiv.textContent = "No recipes found";
     updatePagination();
     return;
   }
 
-   if (paginatedRecipes.length === 0) {
-    currentPage = 1;
-    renderRecipes(arr);
-    return;
-  }
-
   statusDiv.textContent = "";
 
-  recipesSection.innerHTML = arr.slice(start, end).map(({id, image, name, cuisine, rating, difficulty}) =>{ 
-    let recipe = favorites.find(item => item.id === id)
-    let heart = recipe ? "❤️" : "🤍";
-    return `
-    <div class="recipe-card">
-      <button class="heart" data-index=${id}>${heart}</button>
-      <img src=${image} alt=${name}>
-      <h2>${name}</h2>
-      <p>Cuisine: ${cuisine}</p>
-      <p>${rating} 🌟</p>
-      <p>Difficulty: ${difficulty}</p>
-      <button class="view-details-btn" data-id=${id}><span>View Details</span></button>
-    </div>
-  `}).join("");
+  paginatedRecipes.forEach((recipe) => {
+    const {
+      id,
+      image,
+      name,
+      cuisine,
+      rating,
+      difficulty
+    } = recipe;
+
+    // Create the card
+    const card = document.createElement("div");
+    card.classList.add("recipe-card");
+
+    // Create the favorite button
+    const heartButton = document.createElement("button");
+    heartButton.classList.add("heart");
+
+    const isFavorite = favorites.some(
+      (item) => item.id === id
+    );
+
+    heartButton.textContent = isFavorite ? "❤️" : "🤍";
+    heartButton.setAttribute("aria-label",
+      isFavorite
+        ? `Remove ${name} from favorites`
+        : `Add ${name} to favorites`
+    );
+
+    heartButton.addEventListener("click", () => {
+      toggleFavorite(id);
+    });
+
+    // Create the recipe image
+    const recipeImage = document.createElement("img");
+    recipeImage.src = image;
+    recipeImage.alt = name;
+    recipeImage.loading = "lazy";
+
+    // Create the recipe name
+    const heading = document.createElement("h2");
+    heading.textContent = name;
+
+    // Create the cuisine
+    const cuisineText = document.createElement("p");
+    cuisineText.textContent = `Cuisine: ${cuisine}`;
+
+    // Create the rating
+    const ratingText = document.createElement("p");
+    ratingText.textContent = `${rating} ⭐`;
+
+    // Create the difficulty
+    const difficultyText = document.createElement("p");
+    difficultyText.textContent = `Difficulty: ${difficulty}`;
+
+    // Create the details button
+    const detailsButton = document.createElement("button");
+    detailsButton.classList.add("view-details-btn");
+    detailsButton.textContent = "View Details";
+
+    detailsButton.addEventListener("click", () => {
+      showDetails(id);
+    });
+
+    // Assemble the card
+    card.append(
+      heartButton,
+      recipeImage,
+      heading,
+      cuisineText,
+      ratingText,
+      difficultyText,
+      detailsButton
+    );
+
+    recipesSection.appendChild(card);
+  });
 
   updatePagination();
-
   pageDisplay.textContent = currentPage;
+};
 
-  document.querySelectorAll(".view-details-btn").forEach(button => {
-    button.addEventListener("click", () => {
-      const id = Number(button.dataset.id);
-      showDetails(id);
-    })
-  })
 
-  document.querySelectorAll(".heart").forEach(button => {
-    button.addEventListener("click", () => {
-      const favRecipe = Number(button.dataset.index);
-      toggleFavorite(favRecipe);
-    })
-  })
-}
 
 
 const showDetails = (recipeId) => {
-  
-const recipe = allRecipes.find(item => item.id === recipeId);
+  const recipe = allRecipes.find(
+    (item) => item.id === recipeId
+  );
 
-if (!recipe) return;
+  if (!recipe) return;
 
-const {
-  image, name, cuisine, rating, difficulty,
-  prepTimeMinutes, cookTimeMinutes, ingredients, instructions
-} = recipe;
-  const ingredientsArr = ingredients.map(ingredient => `<li>${ingredient}</li>`).join("");
-  const instructionsArr = instructions.join(" ");
+  const {
+    image,
+    name,
+    cuisine,
+    rating,
+    difficulty,
+    prepTimeMinutes,
+    cookTimeMinutes,
+    ingredients,
+    instructions
+  } = recipe;
 
+  modalContent.replaceChildren();
+
+  const detailsCard = document.createElement("div");
+  detailsCard.classList.add("details-card");
+
+  const heading = document.createElement("h2");
+  heading.textContent = name;
+
+  const recipeImage = document.createElement("img");
+  recipeImage.src = image;
+  recipeImage.alt = name;
+
+  const createParagraph = (text) => {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    return paragraph;
+  };
+
+  const ingredientsHeading = document.createElement("h3");
+  ingredientsHeading.textContent = "Ingredients";
+
+  const ingredientsList = document.createElement("ul");
+  ingredientsList.classList.add("padding");
+
+  ingredients.forEach((ingredient) => {
+    const item = document.createElement("li");
+    item.textContent = ingredient;
+    ingredientsList.appendChild(item);
+  });
+
+  const instructionsHeading = document.createElement("h3");
+  instructionsHeading.textContent = "Instructions";
+
+  const instructionsList = document.createElement("ol");
+
+  instructions.forEach((instruction) => {
+    const item = document.createElement("li");
+    item.textContent = instruction;
+    instructionsList.appendChild(item);
+  });
+
+  detailsCard.append(
+    heading,
+    recipeImage,
+    createParagraph(`Cuisine: ${cuisine}`),
+    createParagraph(`Rating: ${rating} ⭐`),
+    createParagraph(`Difficulty: ${difficulty}`),
+    createParagraph(`Prep time: ${prepTimeMinutes} mins`),
+    createParagraph(`Cook time: ${cookTimeMinutes} mins`),
+    ingredientsHeading,
+    ingredientsList,
+    instructionsHeading,
+    instructionsList
+  );
+
+  modalContent.appendChild(detailsCard);
   modal.classList.remove("hidden");
-  modalContent.innerHTML = `
-    <div class="details-card">
-      <button class="close-btn">x</button>
-      <img src=${image} alt=${name}>
-      <p>Cuisine: ${cuisine}</p>
-      <p> ${rating} ⭐</p>
-      <p>Difficulty: ${difficulty}</p>
-      <p>Prep time: ${prepTimeMinutes} mins</p>
-      <p>Cook time: ${cookTimeMinutes} mins</p>
-      <p>Ingredients: </p>
-      <ul class="padding">${ingredientsArr}</ul>
-      <p>Instructions:</p>
-      <p>${instructionsArr}</p>
-    </div>
-  `
-
-  document.querySelectorAll(".close-btn").forEach(button => {
-    button.addEventListener("click", () => {
-      modal.classList.add("hidden");
-    })
-  })
-}
+};
 
 
 const renderCategories = () => {

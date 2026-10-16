@@ -12,7 +12,7 @@ const pageDisplay = document.querySelector("#page");
 
 const modal = document.querySelector("#modal");
 const modalContent = document.querySelector("#modal-content");
-const closeModal = document.querySelector("#close-modal");
+
 
 let recipes = [];
 let favorites = [];
@@ -177,6 +177,19 @@ const showDetails = (recipeId) => {
   } = recipe;
 
   modalContent.replaceChildren();
+
+  const closeButton = document.createElement("button");
+  closeButton.id = "close-modal";
+  closeButton.classList.add("close-btn");
+  closeButton.type = "button";
+  closeButton.textContent = "×";
+  closeButton.setAttribute("aria-label", "Close recipe details");
+
+  closeButton.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+modalContent.appendChild(closeButton);
 
   const detailsCard = document.createElement("div");
   detailsCard.classList.add("details-card");
@@ -364,6 +377,19 @@ sort.addEventListener("change",  handleSearch);
 category.addEventListener("change", handleSearch);
 cuisine.addEventListener("change", handleSearch);
 
+
+modal.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    modal.classList.add("hidden");
+  }
+});
+
+// Close modal with the Escape key
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    modal.classList.add("hidden");
+  }
+});
 
 const init = async () => {
   loadFavorites();

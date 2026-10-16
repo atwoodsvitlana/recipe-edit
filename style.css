@@ -678,7 +678,6 @@ p {
 }
 
 /* Generic lists */
-
 .recipe-card ul,
 .modal-content ul {
   padding-left: 20px;
@@ -764,7 +763,7 @@ p {
 .details-card {
   position: relative;
   width: min(760px, 100%);
-  max-height: calc(100vh - 48px);
+  max-height: calc(100vh - 100px);
   margin: auto;
   padding: 32px;
   overflow-y: auto;
@@ -1097,4 +1096,87 @@ p {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+}
+
+.modal-content {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: #f3f0e9;
+  color: #292820;
+
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #e6e0d5;
+}
+
+.close-btn:focus-visible {
+  outline: 2px solid #5e564d;
+  outline-offset: 3px;
+}
+
+
+/* Consistent styling for ordered and unordered lists in the details modal */
+
+.modal-content ul,
+.modal-content ol,
+.details-card ul,
+.details-card ol {
+  padding-left: 20px;
+  margin: 0 0 20px;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+/* Consistent spacing between list items */
+
+.modal-content ul li,
+.modal-content ol li,
+.details-card ul li,
+.details-card ol li {
+  padding-left: 4px;
+  margin-bottom: 5px;
+}
+
+/* Match the list markers */
+
+.modal-content ol,
+.details-card ol {
+  list-style-type: decimal;
+}
+
+.modal-content ul,
+.details-card ul {
+  list-style-type: disc;
+}
+
+/* Match marker color */
+
+.modal-content ol li::marker,
+.details-card ol li::marker,
+.modal-content ul li::marker,
+.details-card ul li::marker {
+  color: var(--color-sage-dark);
 }

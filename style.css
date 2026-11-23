@@ -761,18 +761,41 @@ p {
 
 
 .details-card {
-  position: relative;
-  width: min(760px, 100%);
-  max-height: calc(100vh - 100px);
-  margin: auto;
-  padding: 32px;
-  overflow-y: auto;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  box-shadow: 0 24px 80px rgb(0 0 0 / 18%);
-  text-align: left;
+    position: relative;
+    width: min(760px, 100%);
+    max-height: calc(100vh - 100px);
+    margin: auto;
+    padding: 32px;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-sage) transparent;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: 0 24px 80px rgb(0 0 0 / 18%);
+    text-align: left;
 }
+
+.details-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.details-card::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 18px 0;
+}
+
+.details-card::-webkit-scrollbar-thumb {
+    background: var(--color-sage);
+    border-radius: 10px;
+}
+
+.details-card::-webkit-scrollbar-thumb:hover {
+    background: var(--color-sage-dark);
+}
+
 
 .details-card h2,
 .details-card h3 {

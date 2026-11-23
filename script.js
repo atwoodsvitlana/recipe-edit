@@ -158,94 +158,93 @@ const renderRecipes = (arr) => {
 
 
 const showDetails = (recipeId) => {
-  const recipe = allRecipes.find(
-    (item) => item.id === recipeId
-  );
+    const recipe = allRecipes.find(
+        (item) => item.id === recipeId
+    );
 
-  if (!recipe) return;
+    if (!recipe) return;
 
-  const {
-    image,
-    name,
-    cuisine,
-    rating,
-    difficulty,
-    prepTimeMinutes,
-    cookTimeMinutes,
-    ingredients,
-    instructions
-  } = recipe;
+    const {
+        image,
+        name,
+        cuisine,
+        rating,
+        difficulty,
+        prepTimeMinutes,
+        cookTimeMinutes,
+        ingredients,
+        instructions
+    } = recipe;
 
-  modalContent.replaceChildren();
+    modal.replaceChildren();
 
-  const closeButton = document.createElement("button");
-  closeButton.id = "close-modal";
-  closeButton.classList.add("close-btn");
-  closeButton.type = "button";
-  closeButton.textContent = "×";
-  closeButton.setAttribute("aria-label", "Close recipe details");
+    const detailsCard = document.createElement("div");
+    detailsCard.classList.add("details-card");
 
-  closeButton.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
+    const closeButton = document.createElement("button");
+    closeButton.id = "close-modal";
+    closeButton.classList.add("close-btn");
+    closeButton.type = "button";
+    closeButton.textContent = "×";
+    closeButton.setAttribute("aria-label", "Close recipe details");
 
-modalContent.appendChild(closeButton);
+    closeButton.addEventListener("click", () => {
+        modal.classList.add("hidden");
+    });
 
-  const detailsCard = document.createElement("div");
-  detailsCard.classList.add("details-card");
+    const heading = document.createElement("h2");
+    heading.textContent = name;
 
-  const heading = document.createElement("h2");
-  heading.textContent = name;
+    const recipeImage = document.createElement("img");
+    recipeImage.src = image;
+    recipeImage.alt = name;
 
-  const recipeImage = document.createElement("img");
-  recipeImage.src = image;
-  recipeImage.alt = name;
+    const createParagraph = (text) => {
+        const paragraph = document.createElement("p");
+        paragraph.textContent = text;
+        return paragraph;
+    };
 
-  const createParagraph = (text) => {
-    const paragraph = document.createElement("p");
-    paragraph.textContent = text;
-    return paragraph;
-  };
+    const ingredientsHeading = document.createElement("h3");
+    ingredientsHeading.textContent = "Ingredients";
 
-  const ingredientsHeading = document.createElement("h3");
-  ingredientsHeading.textContent = "Ingredients";
+    const ingredientsList = document.createElement("ul");
+    ingredientsList.classList.add("padding");
 
-  const ingredientsList = document.createElement("ul");
-  ingredientsList.classList.add("padding");
+    ingredients.forEach((ingredient) => {
+        const item = document.createElement("li");
+        item.textContent = ingredient;
+        ingredientsList.appendChild(item);
+    });
 
-  ingredients.forEach((ingredient) => {
-    const item = document.createElement("li");
-    item.textContent = ingredient;
-    ingredientsList.appendChild(item);
-  });
+    const instructionsHeading = document.createElement("h3");
+    instructionsHeading.textContent = "Instructions";
 
-  const instructionsHeading = document.createElement("h3");
-  instructionsHeading.textContent = "Instructions";
+    const instructionsList = document.createElement("ol");
 
-  const instructionsList = document.createElement("ol");
+    instructions.forEach((instruction) => {
+        const item = document.createElement("li");
+        item.textContent = instruction;
+        instructionsList.appendChild(item);
+    });
 
-  instructions.forEach((instruction) => {
-    const item = document.createElement("li");
-    item.textContent = instruction;
-    instructionsList.appendChild(item);
-  });
+    detailsCard.append(
+        closeButton,
+        heading,
+        recipeImage,
+        createParagraph(`Cuisine: ${cuisine}`),
+        createParagraph(`Rating: ${rating} ⭐`),
+        createParagraph(`Difficulty: ${difficulty}`),
+        createParagraph(`Prep time: ${prepTimeMinutes} mins`),
+        createParagraph(`Cook time: ${cookTimeMinutes} mins`),
+        ingredientsHeading,
+        ingredientsList,
+        instructionsHeading,
+        instructionsList
+    );
 
-  detailsCard.append(
-    heading,
-    recipeImage,
-    createParagraph(`Cuisine: ${cuisine}`),
-    createParagraph(`Rating: ${rating} ⭐`),
-    createParagraph(`Difficulty: ${difficulty}`),
-    createParagraph(`Prep time: ${prepTimeMinutes} mins`),
-    createParagraph(`Cook time: ${cookTimeMinutes} mins`),
-    ingredientsHeading,
-    ingredientsList,
-    instructionsHeading,
-    instructionsList
-  );
-
-  modalContent.appendChild(detailsCard);
-  modal.classList.remove("hidden");
+    modal.appendChild(detailsCard);
+    modal.classList.remove("hidden");
 };
 
 

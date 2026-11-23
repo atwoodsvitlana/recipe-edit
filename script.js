@@ -199,11 +199,23 @@ const showDetails = (recipeId) => {
     recipeImage.src = image;
     recipeImage.alt = name;
 
+    const compactDiv = document.createElement("div");
+    compactDiv.classList.add("compact");
+
     const createParagraph = (text) => {
         const paragraph = document.createElement("p");
         paragraph.textContent = text;
         return paragraph;
     };
+
+    const prepDiv = document.createElement("div");
+    prepDiv.classList.add("prep");
+
+    const prepIngredients = document.createElement("div");
+    prepIngredients.classList.add("prepIngredients");
+
+    const prepInstructions = document.createElement("div");
+    prepInstructions.classList.add("prepInstructions");
 
     const ingredientsHeading = document.createElement("h3");
     ingredientsHeading.textContent = "Ingredients";
@@ -228,19 +240,36 @@ const showDetails = (recipeId) => {
         instructionsList.appendChild(item);
     });
 
+    compactDiv.append(
+        createParagraph(`Cuisine: ${cuisine}`),
+        createParagraph(`Rating: ${rating}`),
+        createParagraph(`Difficulty: ${difficulty}`),
+        createParagraph(`Prep time: ${prepTimeMinutes} mins`),
+        createParagraph(`Cook time: ${cookTimeMinutes} mins`),
+    );
+
+    prepIngredients.append(
+        ingredientsHeading,
+        ingredientsList
+    );
+
+    prepInstructions.append(
+        instructionsHeading,
+        instructionsList
+    );
+
+    prepDiv.append(
+       prepIngredients,
+       prepInstructions
+    );
+
+
     detailsCard.append(
         closeButton,
         heading,
         recipeImage,
-        createParagraph(`Cuisine: ${cuisine}`),
-        createParagraph(`Rating: ${rating} ⭐`),
-        createParagraph(`Difficulty: ${difficulty}`),
-        createParagraph(`Prep time: ${prepTimeMinutes} mins`),
-        createParagraph(`Cook time: ${cookTimeMinutes} mins`),
-        ingredientsHeading,
-        ingredientsList,
-        instructionsHeading,
-        instructionsList
+        compactDiv,
+        prepDiv
     );
 
     modal.appendChild(detailsCard);
